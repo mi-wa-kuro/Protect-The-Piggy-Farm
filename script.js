@@ -145,7 +145,7 @@ function endGame() {
     const pigCount = Math.min(score, 20);
 
     for (let i = 0; i < pigCount; i++) {
-      createPig(i * 0.2);
+      createPig(i * 0.4);
     }
   }, 2000);
 
@@ -163,6 +163,7 @@ function createPig(delay) {
 
   pig.src = "images/pig1.png";
   pig.classList.add("running-pig");
+  pig.style.bottom = `${20 + Math.random() * 50}px`;
 
   document.getElementById("pig-run-area").appendChild(pig);
 
@@ -185,8 +186,12 @@ function createPig(delay) {
     }
   }, 120);
 
-  // 少しずつずらして走らせる
-  pig.style.animationDelay = `${delay}s`;
+  const randomDelay = delay + Math.random() * 0.5;
+  const hopDelay = Math.random();
+  const hopSpeed = 0.35 + Math.random() * 0.25;
+
+  pig.style.animationDelay = `${randomDelay}s, ${hopDelay}s`;
+  pig.style.animationDuration = `4s, ${hopSpeed}s`;
 
   // 5秒後に削除
   setTimeout(() => {
