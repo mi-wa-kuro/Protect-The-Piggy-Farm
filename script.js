@@ -16,6 +16,8 @@ const timeText = document.getElementById("time");
 const hitSound = new Audio("sounds/hammer.mp3");
 const whistleSound = new Audio("sounds/whistle.mp3");
 const countSound = new Audio("sounds/count.mp3");
+const pigletSound = new Audio("sounds/piglet.mp3");
+const helmetSound = new Audio("sounds/helmet.mp3");
 
 const titleBgm = new Audio("sounds/bgm_1.mp3");
 const storyBgm = new Audio("sounds/bgm_2.mp3");
@@ -105,7 +107,7 @@ function startGame() {
 
   showMole();
 
-  moleInterval = setInterval(showMole, 1000);
+  moleInterval = setInterval(showMole, 1200);
 
   timerInterval = setInterval(() => {
     time--;
@@ -208,10 +210,21 @@ function showMole() {
   holes.forEach((hole) => {
     hole.classList.remove("mole");
     hole.classList.remove("dead");
+    hole.classList.remove("pig");
+    hole.classList.remove("pig-dead");
+    hole.classList.remove("helmet");
   });
 
   const randomIndex = Math.floor(Math.random() * holes.length);
-  holes[randomIndex].classList.add("mole");
+  const randomCharacter = Math.random();
+
+  if (randomCharacter < 0.7) {
+    holes[randomIndex].classList.add("mole");
+  } else if (randomCharacter < 0.9) {
+    holes[randomIndex].classList.add("pig");
+  } else {
+    holes[randomIndex].classList.add("helmet");
+  }
 }
 
 holes.forEach((hole) => {
@@ -232,6 +245,31 @@ holes.forEach((hole) => {
       setTimeout(() => {
         hole.classList.remove("dead");
       }, 300);
+    }
+
+    if (hole.classList.contains("pig")) {
+      playSound(hitSound);
+
+      score--;
+
+      if (score < 0) {
+        score = 0;
+      }
+
+      scoreText.textContent = score;
+
+      hole.classList.remove("pig");
+      hole.classList.add("pig-dead");
+
+      setTimeout(() => {
+        hole.classList.remove("pig-dead");
+      }, 300);
+    }
+    if (hole.classList.contains("helmet")) {
+      playSound(helmetSound);
+
+      hole.classList.remove("helmet");
+      hole.classList.add("mole");
     }
   });
 });

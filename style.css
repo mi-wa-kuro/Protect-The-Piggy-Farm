@@ -130,7 +130,7 @@ body {
 
 .story-text {
   position: absolute;
-  width: 90%;
+  width: 80%;
   left: 10%;
   bottom: -100%;
   text-align: center;
@@ -217,4 +217,25 @@ body {
   50% {
     transform: translateY(-25px);
   }
+}
+
+.pig {
+  background-image: url("images/play_pig.png"), url("images/hole.png");
+  background-size: 100%, contain;
+  background-repeat: no-repeat;
+  background-position: center 20px, center;
+}
+
+.pig-dead {
+  background-image: url("images/play_pig_dead.png"), url("images/hole.png");
+  background-size: 100%, contain;
+  background-repeat: no-repeat;
+  background-position: center 20px, center;
+}
+
+.helmet {
+  background-image: url("images/mole_helmet.png"), url("images/hole.png");
+  background-size: 100%, contain;
+  background-repeat: no-repeat;
+  background-position: center 20px, center;
 }
