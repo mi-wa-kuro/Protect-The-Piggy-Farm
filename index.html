@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>もぐらたたきゲーム</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="title-screen">
+    <img src="images/title.png" alt="タイトル画面">
+    <button id="start-button">GAME START</button>
+  </div>
+
+  <div id="story-screen" class="hidden">
+    <div class="story-text">
+      <p>遠い遠い農場でのお話…</p>
+
+      <p>
+        ぶたさんたちが<br>
+        のびのびと暮らす平和な農場に
+      </p>
+
+      <p>
+        いたずら好きの<br>
+        もぐらさんがやってきました
+      </p>
+
+      <p>
+        ハンマーでぴこぴこして<br>
+        もぐらさんをやっつけましょう<br>
+      </p>
+
+      <p>
+        そして再び<br>
+        農場に平穏を！
+      </p>
+    </div>
+  </div>
+
+  <div id="countdown-screen" class="hidden">
+    <div id="countdown-text">3</div>
+  </div>
+
+  <div id="game-over-screen" class="hidden">
+    <div id="game-over-text">終了！</div>
+  </div>
+
+  <div id="score-screen" class="hidden">
+    <h2>今回のスコア</h2>
+    <div id="final-score">0</div>
+    <div id="pig-run-area"></div>
+  </div>
+
+  <div id="game-screen" class="hidden">
+    <img src="images/hammer.png" class="hammer" id="hammer" alt="">
+
+    <p>スコア: <span id="score">0</span></p>
+    <p>残り時間: <span id="time">30</span>秒</p>
+
+    <div class="game-board">
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

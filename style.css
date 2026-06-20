@@ -1,0 +1,199 @@
+.hidden {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  background-image: url("images/grass.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hammer {
+  position: fixed;
+  width: 80px;
+  pointer-events: none;
+  transform: rotate(0deg);
+  transition: transform 0.08s;
+  z-index: 999;
+}
+
+.hammer.hit {
+  transform: rotate(-35deg);
+}
+
+#title-screen,
+#story-screen,
+#game-screen {
+  min-height: 100vh;
+}
+
+#game-screen {
+  position: relative;
+  cursor: none;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 150px);
+  gap: 20px;
+  width: max-content;
+  margin: 50px auto;
+}
+
+.hole {
+  width: 150px;
+  height: 150px;
+  background-image: url("images/hole.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/*タイトル画面*/
+#title-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#title-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#start-button {
+  position: absolute;
+  left: 50%;
+  bottom: 80px;
+  transform: translateX(-50%);
+
+  padding: 16px 40px;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+/**/
+
+.mole {
+  background-image: url("images/mole.png"), url("images/hole.png");
+  background-size: 100%, contain;
+  background-repeat: no-repeat;
+  background-position: center 20px, center;
+}
+
+.dead {
+  background-image: url("images/mole_dead.png"), url("images/hole.png");
+  background-size: 100%, contain;
+  background-repeat: no-repeat;
+  background-position: center 20px, center;
+}
+
+#story-screen {
+  background: black;
+  color: #ffd700;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  font-weight: bold;
+}
+
+.story-text {
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  bottom: -100%;
+  text-align: center;
+  font-size: 2rem;
+  line-height: 1.8;
+  animation: story-crawl 15s linear forwards;
+}
+
+@keyframes story-crawl {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-220%);
+  }
+}
+
+#countdown-screen,
+#game-over-screen,
+#score-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  z-index: 1000;
+}
+
+#countdown-text,
+#game-over-text {
+  font-size: 120px;
+  font-weight: bold;
+}
+
+#final-score {
+  font-size: 100px;
+  color: gold;
+  text-align: center;
+}
+
+/*ぶたさん*/
+#pig-run-area {
+  position: fixed;
+  left: 0;
+  bottom: 80px;
+  width: 100vw;
+  height: 160px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.running-pig {
+  position: absolute;
+  left: -100px;
+  bottom: 0;
+  width: 80px;
+  animation: pig-run 4s linear forwards, pig-hop 0.4s ease-in-out infinite;
+}
+
+@keyframes pig-run {
+  from {
+    left: -100px;
+  }
+
+  to {
+    left: 100vw;
+  }
+}
+
+@keyframes pig-hop {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-25px);
+  }
+}
