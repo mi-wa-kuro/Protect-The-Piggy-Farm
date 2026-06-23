@@ -85,7 +85,10 @@ function startCountdown() {
       countdownText.textContent = count;
     } else if (count === 0) {
       countdownText.textContent = "START!";
-      playBgm(gameBgm);
+
+      setTimeout(() => {
+        playBgm(gameBgm);
+      }, 500);
     } else {
       clearInterval(countdownInterval);
 
@@ -248,7 +251,7 @@ holes.forEach((hole) => {
     }
 
     if (hole.classList.contains("pig")) {
-      playSound(hitSound);
+      playSound(pigletSound);
 
       score--;
 
