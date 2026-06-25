@@ -7,6 +7,7 @@ const gameOverScreen = document.getElementById("game-over-screen");
 const scoreScreen = document.getElementById("score-screen");
 const finalScore = document.getElementById("final-score");
 const startButton = document.getElementById("start-button");
+const ruleScreen = document.getElementById("rule-screen");
 
 const holes = document.querySelectorAll(".hole");
 const scoreText = document.getElementById("score");
@@ -23,6 +24,7 @@ const titleBgm = new Audio("sounds/bgm_1.mp3");
 const storyBgm = new Audio("sounds/bgm_2.mp3");
 const gameBgm = new Audio("sounds/bgm_3.mp3");
 const scoreBgm = new Audio("sounds/bgm_2.mp3");
+const goldSound = new Audio("sounds/gold.mp3");
 
 titleBgm.loop = true;
 storyBgm.loop = true;
@@ -65,8 +67,13 @@ startButton.addEventListener("click", () => {
   storyScreen.classList.remove("hidden");
 
   setTimeout(() => {
-    storyScreen.classList.add("hidden");
+  storyScreen.classList.add("hidden");
+  ruleScreen.classList.remove("hidden");
+
+  setTimeout(() => {
+    ruleScreen.classList.add("hidden");
     startCountdown();
+  }, 4000);
   }, 15000);
 });
 
@@ -120,6 +127,21 @@ function startGame() {
       endGame();
     }
   }, 1000);
+}
+
+function showScorePopup(hole, text, className) {
+  const popup = document.createElement("div");
+
+  popup.classList.add("score-popup");
+  popup.classList.add(className);
+
+  popup.textContent = text;
+
+  hole.appendChild(popup);
+
+  setTimeout(() => {
+    popup.remove();
+  }, 600);
 }
 
 function endGame() {
@@ -216,18 +238,42 @@ function showMole() {
     hole.classList.remove("pig");
     hole.classList.remove("pig-dead");
     hole.classList.remove("helmet");
+    hole.classList.remove("gold");
+    hole.classList.remove("gold-dead");
   });
 
-  const randomIndex = Math.floor(Math.random() * holes.length);
-  const randomCharacter = Math.random();
+  const appearCount = Math.random() < 0.3 ? 2 : 1;
+  const selectedIndexes = [];
 
-  if (randomCharacter < 0.7) {
-    holes[randomIndex].classList.add("mole");
-  } else if (randomCharacter < 0.9) {
-    holes[randomIndex].classList.add("pig");
-  } else {
-    holes[randomIndex].classList.add("helmet");
+  while (selectedIndexes.length < appearCount) {
+    const randomIndex = Math.floor(Math.random() * holes.length);
+
+    if (!selectedIndexes.includes(randomIndex)) {
+      selectedIndexes.push(randomIndex);
+    }
   }
+
+  let goldAppeared = false;
+
+  selectedIndexes.forEach((index) => {
+    const randomCharacter = Math.random();
+
+    if (randomCharacter < 0.67) {
+      holes[index].classList.add("mole");
+    } else if (randomCharacter < 0.87) {
+      holes[index].classList.add("pig");
+    } else if (randomCharacter < 0.97) {
+      holes[index].classList.add("helmet");
+    } else {
+      if (!goldAppeared) {
+        holes[index].classList.add("gold");
+        playSound(goldSound);
+        goldAppeared = true;
+      } else {
+        holes[index].classList.add("mole");
+      }
+    }
+  });
 }
 
 holes.forEach((hole) => {
@@ -244,6 +290,8 @@ holes.forEach((hole) => {
 
       hole.classList.remove("mole");
       hole.classList.add("dead");
+
+      showScorePopup(hole, "+1", "score-plus");
 
       setTimeout(() => {
         hole.classList.remove("dead");
@@ -264,6 +312,8 @@ holes.forEach((hole) => {
       hole.classList.remove("pig");
       hole.classList.add("pig-dead");
 
+      showScorePopup(hole, "-1", "score-minus");
+
       setTimeout(() => {
         hole.classList.remove("pig-dead");
       }, 300);
@@ -273,6 +323,22 @@ holes.forEach((hole) => {
 
       hole.classList.remove("helmet");
       hole.classList.add("mole");
+
+      showScorePopup(hole, "💥", "score-helmet");
+    }
+    if (hole.classList.contains("gold")) {
+
+      score += 5;
+      scoreText.textContent = score;
+
+      hole.classList.remove("gold");
+      hole.classList.add("gold-dead");
+
+      showScorePopup(hole, " +5 ", "score-plus");
+
+      setTimeout(() => {
+        hole.classList.remove("gold-dead");
+      }, 300);
     }
   });
 });
